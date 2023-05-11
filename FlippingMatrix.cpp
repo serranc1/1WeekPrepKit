@@ -1,4 +1,4 @@
-//INCOMPLETE
+//INCOMPLETE, NEEDS TESTING
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -19,87 +19,17 @@ vector<string> split(const string &);
 int flippingMatrix(vector<vector<int>> matrix) 
 {
     int n2 = matrix[0].size();
-    int c1 = 0;
-    int c2 = 0;
     int sol = 0;
-    // check each row if the right is greater than the left
-    for(int i = 0; i < n2; i++)
+    for (int i = 0; i < n2/2; i++)
     {
-        for(int j = 0; j < n2; j++)
+        for (int j = 0; j < n2/2; j++)
         {
-            if(j<n2/2)
-            {
-                c1+=matrix[i][j];
-            }
-            else
-            {
-                c2+=matrix[i][j];
-            }
+            //4 quadrants, so 4 possible mirrored values to compare that can be swapped into top left
+            sol += max(matrix[i][j], matrix[i][n2 - j - 1], matrix[n2 - i - 1][j], matrix[n2 - i - 1][n2 - j - 1]);
         }
-        if(c2>c1)
-        {
-            //swap left and right
-            for(int j = 0; j < n2 / 2; j++)
-            {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][n2 - j - 1];
-                matrix[i][n2 - j - 1] = temp;
-            }    
-        }
-        c1 = 0;
-        c2 = 0;
     }
-    for(int i = 0; i < n2; i++)
-    {
-        for(int j = 0; j < n2; j++)
-        {
-            cout << matrix[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-    // check the left n columns if the bottom is greater than the top
-    for(int i = 0; i < n2/2; i++)
-    {
-        for(int j = 0; j < n2; j++)
-        {
-            if(j < n2/2)
-            {
-                c1+=matrix[j][i];
-            }
-            else
-            {
-                c2+=matrix[j][i];
-            }
-        }
-        if(c2>c1)
-        {
-            //swap top and bottom
-            for(int j = 0; j < n2 / 2; j++)
-            {
-                int temp = matrix[j][i];
-                matrix[j][i] = matrix[n2 - j - 1][i];
-                matrix[n2 - j - 1][i] = temp;
-            }
-            sol+=c2;
-        }
-        else
-        {
-            sol+=c1;
-        }
-        c1 = 0;
-        c2 = 0;
-    }
-    for(int i = 0; i < n2; i++)
-    {
-        for(int j = 0; j < n2; j++)
-        {
-            cout << matrix[i][j] << " ";
-        }
-        cout << endl;
-    }   
     return sol;
-}
+    
 
 int main()
 {
