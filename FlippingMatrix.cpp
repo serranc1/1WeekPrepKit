@@ -1,6 +1,4 @@
-//INCOMPLETE, NEEDS TESTING
 #include <bits/stdc++.h>
-
 using namespace std;
 
 string ltrim(const string &);
@@ -25,11 +23,13 @@ int flippingMatrix(vector<vector<int>> matrix)
         for (int j = 0; j < n2/2; j++)
         {
             //4 quadrants, so 4 possible mirrored values to compare that can be swapped into top left
-            sol += max(matrix[i][j], matrix[i][n2 - j - 1], matrix[n2 - i - 1][j], matrix[n2 - i - 1][n2 - j - 1]);
+            int m1 = max(matrix[i][j], matrix[i][n2 - j - 1]);
+            int m2 = max(matrix[n2 - i - 1][j], matrix[n2 - i - 1][n2 - j - 1]);
+            sol += max(m1, m2);
         }
     }
     return sol;
-    
+}
 
 int main()
 {
