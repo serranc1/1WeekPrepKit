@@ -23,7 +23,8 @@ int towerBreakers(int n, int m)
     {
         return 2;
     }
-    //if n is odd, P1 can lower a tower's height to 1 each turn and win regardless of what P2 does
+    //if n is odd, P1 can reduce the height of one tower to 1 to start 
+    //if n > 1, P1 can mirror P2's moves afterwards to win
     if (n % 2 == 1) 
     {
         return 1;
