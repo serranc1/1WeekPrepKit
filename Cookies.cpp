@@ -14,23 +14,50 @@ vector<string> split(const string &);
  *  1. INTEGER k
  *  2. INTEGER_ARRAY A
  */
-//this works but it times out for bigger test cases, needs optimization
+
 int cookies(int k, vector<int> A) 
 {
-    if(A.size() == 1)
+    int iterations = 0;
+    //if there is only 1 cookie below the sweetness threshold, it's impossible to get sweeter
+    if(A.size() == 1 && A[0] < k)
     {
         return -1;
     }
     int iterations = 0;
-    sort(A.begin(), A.end());
-    int index = 0;
+    //priority queue declared this way always sorts least to greatest, so less time than sorting w/ vectors
+    priority_queue<int, vector<int>, greater<int>> pq;
+    for(int i = 0; i < A.size(); i++)
+    {
+        pq.push(A[i]);
+    }
+    while(pq.size() >= 2 && pq.top() < k)
+    {
+        int c1 = pq.top();
+        pq.pop();
+        int c2 = pq.top();
+        pq.pop();
+        pq.push(c1 + 2 * c2);
+        iterations++;
+    }
+    if(pq.top() < k)
+    {
+        return -1;
+    }
+    return iterations;
+    //vector was too slow, so use priority queue instead
+    
+    /*sort(A.begin(), A.end());
+    if (A[0] > k)
+    {
+        return 0;
+    }
     for(int i = 0; i < A.size(); i++)
     {
         if (A[i] < k)
         {
             A[i + 1] = A[i] + 2 * A[i + 1];
             A.erase(A.begin());
-            if(A.size() == 1 && A[i] < k)
+            if(A.size() == 1 && A[0] < k)
             {
                 return -1;
             }
@@ -39,7 +66,7 @@ int cookies(int k, vector<int> A)
             iterations++;
         }
     }
-    return iterations;   
+    return iterations;*/   
 }
 
 int main()
